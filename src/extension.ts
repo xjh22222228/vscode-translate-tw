@@ -4,7 +4,7 @@ import * as filepath from 'path';
 
 const { execSync } = childProcess;
 
-const platform = process.platform;
+const { platform } = process;
 
 export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('vscode-translate-tw', (args) => {
@@ -16,8 +16,10 @@ export function activate(context: vscode.ExtensionContext) {
 			cmdPath += '.exe';
 		}
 
+		console.log(`Command Lock: ${cmdPath}`);
+
 		try {
-			const res = execSync(`${cmdPath} --path=${path}`);
+			const res = execSync(`${cmdPath} --path="${path}"`);
 			console.log(res.toString());
 		} catch (error) {
 			console.error(error);
@@ -27,5 +29,4 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable);
 }
 
-// this method is called when your extension is deactivated
 export function deactivate() {}
