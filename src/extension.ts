@@ -6,15 +6,28 @@ const { execSync } = childProcess;
 
 const { platform } = process;
 
+function getPlatformApp(): string|undefined {
+	switch (platform) {
+		case 'darwin':
+			return 'tw_darwin_amd64';
+		case 'win32':
+			return 'tw_windows_amd64.exe';
+		case 'linux':
+			return 'tw_linux_amd64';
+	}
+}
+
 export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('vscode-translate-tw', (args) => {
-		const { path } = args;
+		const path: string = args._fsPath;
 
-		let cmdPath = filepath.join(__dirname, 'tw');
+		const plat = getPlatformApp();
 
-		if (platform === 'win32') {
-			cmdPath += '.exe';
+		if (!plat) {
+			return;
 		}
+
+		const cmdPath: string = filepath.join(__dirname, plat);
 
 		console.log(`Command Lock: ${cmdPath}`);
 
@@ -22,7 +35,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const res = execSync(`${cmdPath} --path="${path}"`);
 			console.log(res.toString());
 		} catch (error) {
-			console.error(error);
+			vscode.window.showErrorMessage(error.message);
 		}
 	});
 
