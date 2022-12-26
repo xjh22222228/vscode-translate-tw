@@ -1,4 +1,3 @@
-基于 [https://github.com/xjh22222228/translate-tw](https://github.com/xjh22222228/translate-tw)
 
 <p align="center">
   <img src="icon.png" width="200" />
@@ -10,12 +9,12 @@
   </p>
 </p>
 
-![](media/screenshot.gif)
-
-
-
 ## Install
 VSCode Extensions search `translate-tw`.
+
+
+## Usage
+Right click the current file to find "将当前文件转换为繁体"
 
 
 ## LICENSE
