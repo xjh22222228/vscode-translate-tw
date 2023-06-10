@@ -16,6 +16,11 @@ VSCode Extensions search `translate-tw`.
 ## Usage
 Right click the current file to find "将当前文件转换为繁体"
 
+# Develop
+```
+node:v18
+```
+
 
 ## LICENSE
 MIT

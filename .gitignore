@@ -1,7 +1,5 @@
 out
-dist/extension.js
-dist/extension.js.map
+dist
 node_modules
 .vscode-test/
 *.vsix
-.DS_Store
