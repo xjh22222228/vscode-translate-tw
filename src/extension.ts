@@ -34,12 +34,57 @@ export function activate(context: vscode.ExtensionContext) {
 		try {
 			const res = execSync(`${cmdPath} --path="${path}"`);
 			console.log(res.toString());
-		} catch (error) {
+		} catch (error : any) {
 			vscode.window.showErrorMessage(error.message);
 		}
 	});
 
+	let disposable2 = vscode.commands.registerCommand('extension.getSelectedText', function () {
+		const plat = getPlatformApp();
+
+		if (!plat) {
+			return;
+		}
+
+		const cmdPath: string = filepath.join(__dirname, plat);
+		// const cmdPath = '/Users/xiejiahe/NoCode/develop/open-source/translate-tw/tw_build/tw_darwin_amd64';
+
+    // 获取当前活动编辑器
+		const editor = vscode.window.activeTextEditor;
+
+		if (editor) {
+			// 获取选择区域
+			const selection = editor.selection;
+			const path: string = editor.document.uri.fsPath;
+
+			if (!selection.isEmpty) {
+				// 获取选择的文本
+				const selectedText = editor.document.getText(selection);
+
+				// 获取选择的起始和结束位置
+				const startPosition = JSON.parse(JSON.stringify(selection.start));
+				const endPosition = JSON.parse(JSON.stringify(selection.end));
+				startPosition.line += 1;
+				endPosition.line += 1;
+				const cmd = `${cmdPath} --path="${path}" --start='${JSON.stringify(startPosition)}' --end='${JSON.stringify(endPosition)}'`;
+				console.log(cmd);
+				try {
+					const res = execSync(cmd);
+					console.log(res.toString());
+				} catch (error : any) {
+					vscode.window.showErrorMessage(error.message);
+				}
+
+				// 输出选择的文本和位置信息
+				// console.log("Selected Text: ", selectedText);
+				// console.log("Start Position: ", JSON.stringify(startPosition));
+				// console.log("End Position: ", JSON.stringify(endPosition));
+			}
+		}
+  });
+
 	context.subscriptions.push(disposable);
+	context.subscriptions.push(disposable2);
 }
 
 export function deactivate() {}
