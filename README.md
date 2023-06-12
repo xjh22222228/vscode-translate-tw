@@ -1,6 +1,5 @@
 
 <p align="center">
-  <img src="icon.png" width="200" />
   <p align="center">将文件内的中文简体转换成繁体</p>
   <p align="center">
     <img src="https://img.shields.io/github/package-json/v/xjh22222228/vscode-translate-tw" />
@@ -16,7 +15,7 @@ VSCode Extensions search `translate-tw`.
 ## Usage
 Right click the current file to find "将当前文件转换为繁体"
 
-# Develop
+## Develop
 ```
 node:v18
 ```
