@@ -2,7 +2,7 @@
   "name": "translate-tw",
   "displayName": "translate-tw",
   "description": "简体中文转换繁体中文",
-	"version": "0.2.4",
+	"version": "0.2.5",
 	"publisher": "xjh22222228",
   "engines": {
     "vscode": "^1.79.0"
