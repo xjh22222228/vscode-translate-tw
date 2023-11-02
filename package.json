@@ -33,6 +33,10 @@
 				"key": "ctrl+alt+h",
 				"command": "extension.getSelectedText",
 				"title": "将当前选中转换为繁体"
+			},
+      {
+				"command": "extension.translateDir",
+				"title": "转换为繁体"
 			}
 		],
 		"menus": {
@@ -46,6 +50,12 @@
 					"command": "extension.getSelectedText",
 					"group": "z_commands",
 					"when": "editorFocus"
+				}
+			],
+      "explorer/context": [
+				{
+					"command": "extension.translateDir",
+					"group": "navigation"
 				}
 			]
 		}

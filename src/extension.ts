@@ -24,6 +24,29 @@ export function activate(context: vscode.ExtensionContext) {
 		const plat = getPlatformApp();
 
 		if (!plat) {
+			vscode.window.showErrorMessage('不支持此当前系统');
+			return;
+		}
+
+		const cmdPath: string = filepath.join(__dirname, plat);
+
+		console.log(`Command Lock: ${cmdPath}`);
+
+		try {
+			const res = execSync(`${cmdPath} --path="${path}"`);
+			console.log(res.toString());
+		} catch (error : any) {
+			vscode.window.showErrorMessage(error.message);
+		}
+	});
+
+	let disposable3 = vscode.commands.registerCommand('extension.translateDir', (args) => {
+		const path: string = args._fsPath;
+
+		const plat = getPlatformApp();
+
+		if (!plat) {
+			vscode.window.showErrorMessage('不支持此当前系统');
 			return;
 		}
 
@@ -43,11 +66,11 @@ export function activate(context: vscode.ExtensionContext) {
 		const plat = getPlatformApp();
 
 		if (!plat) {
+			vscode.window.showErrorMessage('不支持此当前系统');
 			return;
 		}
 
 		const cmdPath: string = filepath.join(__dirname, plat);
-		// const cmdPath = '/Users/xiejiahe/NoCode/develop/open-source/translate-tw/tw_build/tw_darwin_amd64';
 
     // 获取当前活动编辑器
 		const editor = vscode.window.activeTextEditor;
@@ -85,6 +108,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disposable2);
+	context.subscriptions.push(disposable3);
 }
 
 export function deactivate() {}
