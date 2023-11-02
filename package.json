@@ -55,7 +55,7 @@
       "explorer/context": [
 				{
 					"command": "extension.translateDir",
-					"group": "navigation"
+					"group": "z_commands"
 				}
 			]
 		}
