@@ -18,8 +18,14 @@ function getPlatformApp(): string|undefined {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-	let disposable = vscode.commands.registerCommand('vscode-translate-tw', (args) => {
+
+	const callback = (args: any) => {
 		const path: string = args._fsPath;
+
+		if (!path) {
+			vscode.window.showErrorMessage('请打开文件后在试');
+			return;
+		}
 
 		const plat = getPlatformApp();
 
@@ -30,37 +36,16 @@ export function activate(context: vscode.ExtensionContext) {
 
 		const cmdPath: string = filepath.join(__dirname, plat);
 
-		console.log(`Command Lock: ${cmdPath}`);
-
 		try {
 			const res = execSync(`${cmdPath} --path="${path}"`);
-			console.log(res.toString());
 		} catch (error : any) {
 			vscode.window.showErrorMessage(error.message);
 		}
-	});
+	};
 
-	let disposable3 = vscode.commands.registerCommand('extension.translateDir', (args) => {
-		const path: string = args._fsPath;
+	let disposable = vscode.commands.registerCommand('vscode-translate-tw', callback);
 
-		const plat = getPlatformApp();
-
-		if (!plat) {
-			vscode.window.showErrorMessage('不支持此当前系统');
-			return;
-		}
-
-		const cmdPath: string = filepath.join(__dirname, plat);
-
-		console.log(`Command Lock: ${cmdPath}`);
-
-		try {
-			const res = execSync(`${cmdPath} --path="${path}"`);
-			console.log(res.toString());
-		} catch (error : any) {
-			vscode.window.showErrorMessage(error.message);
-		}
-	});
+	let disposable3 = vscode.commands.registerCommand('extension.translateDir', callback);
 
 	let disposable2 = vscode.commands.registerCommand('extension.getSelectedText', function () {
 		const plat = getPlatformApp();
@@ -90,10 +75,8 @@ export function activate(context: vscode.ExtensionContext) {
 				startPosition.line += 1;
 				endPosition.line += 1;
 				const cmd = `${cmdPath} --path="${path}" --start='${JSON.stringify(startPosition)}' --end='${JSON.stringify(endPosition)}'`;
-				console.log(cmd);
 				try {
-					const res = execSync(cmd);
-					console.log(res.toString());
+					execSync(cmd);
 				} catch (error : any) {
 					vscode.window.showErrorMessage(error.message);
 				}
